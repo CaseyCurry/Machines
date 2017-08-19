@@ -11,7 +11,7 @@ git clone https://github.com/xkbcommon/libxkbcommon.git
 git clone http://git.savannah.gnu.org/r/confuse.git
 git clone https://github.com/i3/i3.git
 
-#macros
+# macros
 cd ~/source/macros
 git tag -l
 git checkout tags/util-macros-1.19.0
@@ -19,7 +19,7 @@ git checkout tags/util-macros-1.19.0
 make
 sudo make install
 
-#util-render
+# util-render
 cd ~/source/util-renderutil
 git submodule update --init
 git tag -l
@@ -28,7 +28,7 @@ git checkout tags/0.3.9
 make
 sudo make install
 
-#util-image
+# util-image
 cd ~/source/util-image
 git submodule update --init
 git tag -l
@@ -37,7 +37,7 @@ git checkout tags/0.4.0
 make
 sudo make install
 
-#util-cursor
+# util-cursor
 cd ~/source/util-cursor
 git submodule update --init
 git tag -l
@@ -46,7 +46,7 @@ git checkout tags/0.1.2
 make
 sudo make install
 
-#proto
+# proto
 cd ~/source/proto
 git tag -l
 git checkout tags/1.11
@@ -54,7 +54,7 @@ git checkout tags/1.11
 make
 sudo make install
 
-#libxcb
+# libxcb
 cd ~/source/libxcb
 git tag -l
 git checkout tags/1.11
@@ -62,7 +62,7 @@ git checkout tags/1.11
 make
 sudo make install
 
-#xkbcommon
+# xkbcommon
 cd ~/source/libxkbcommon
 git tag -l
 git checkout tags/xkbcommon-0.5.0
@@ -70,7 +70,7 @@ git checkout tags/xkbcommon-0.5.0
 make
 sudo make install
 
-#confuse
+# confuse
 cd ~/source/confuse
 git tag -l
 git checkout tags/V2_7
@@ -78,23 +78,36 @@ git checkout tags/V2_7
 make
 sudo make install
 
-#i3
+# i3
 cd ~/source/i3
 git tag -l
 git checkout tags/4.10.2
 make
 sudo make install
 
-#i3status
+# i3status
 sudo yum install -y i3status
+
+# i3 config
 echo "exec i3" > ~/.xinitrc
+mkdir ~/.i3 && touch ~/.i3/config
+cat /etc/i3/config | sed 's/Mod1/mod/g' > ~/.i3/config
+sed -i '/exec i3-config-wizard/ s/^/#/' ~/.i3/config
+sed -i '1s/^/set $mod Mod4\n\n/' ~/.i3/config
 
-#nvidia driver
+# blacklist nouveau driver
+# http://www.dedoimedo.com/computers/centos-7-nvidia.html
+# https://www.linkedin.com/pulse/rhel7centos-nvidia-drviers-updated-christopher-meacham
+sudo rpm -e xorg-x11-drivers xorg-x11-drv-nouveau
+sudo bash -c 'echo "blacklist nouveau" > /etc/modprobe.d/blacklist.conf'
+sudo sed -i 's/quiet/quiet rd.driver.blacklist=nouveau/' /etc/default/grub
+sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
 
-#bumblebee
 
-#i3
+# download nvidia driver
+sudo yum install -y kernel-devel kernel-headers gcc make
+cd ~
+curl -O http://us.download.nvidia.com/XFree86/Linux-x86_64/384.59/NVIDIA-Linux-x86_64-384.59.run
+chmod +x NVIDIA-Linux-x86_64-384.59.run
 
-# usermod -a -G audio cj
-# usermod -a -G video cj
-# usermod -a -G bumblebee cj
+# reboot with nouveau drivers
