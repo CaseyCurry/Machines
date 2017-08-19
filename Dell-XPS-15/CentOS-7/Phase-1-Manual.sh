@@ -16,7 +16,7 @@ chmod u+x Phase-3-Auto.sh
 chmod u+x Phase-4-Auto.sh
 
 # execute phase 2
-sudo ~/source/Dell-XPS-15/CentOS-7/Phase-2-Auto.sh
+~/source/Dell-XPS-15/CentOS-7/Phase-2-Auto.sh
 
 # reboot
 
