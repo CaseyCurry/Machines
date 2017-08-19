@@ -16,7 +16,7 @@ chmod u+x Phase-3-Auto.sh
 chmod u+x Phase-4-Auto.sh
 
 # execute phase 2
-sudo ./Phase-2-Auto.sh
+sudo ~/source/Dell-XPS-15/CentOS-7/Phase-2-Auto.sh
 
 # reboot
 
@@ -26,7 +26,7 @@ sudo ./Phase-2-Auto.sh
 # reboot
 
 # install nvidia driver
-sudo ./NVIDIA-Linux-x86_64-384.59.run
+sudo ~/NVIDIA-Linux-x86_64-384.59.run
 
 # reboot
 

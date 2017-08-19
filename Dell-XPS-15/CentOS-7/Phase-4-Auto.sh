@@ -5,9 +5,7 @@ rm ./NVIDIA-Linux-x86_64-384.59.run
 #bumblebee
 sudo rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 sudo rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
-sudo yum install -y bumblebee
-sudo yum install -y mesa-libOSMesa
-sudo yum install -y xorg-x11-drv-intel
+sudo yum install -y bumblebee mesa-libOSMesa
 sudo printf "[Unit]
 Description=Bumblebee Daemon
 
@@ -23,7 +21,7 @@ StandardOutput=kmsg
 WantedBy=multi-user.target" > /etc/systemd/system/bumblebeed.service
 sudo systemctl enable --now bumblebeed
 
-sudo rm /etc/bumblebee/bumblebee.conf
+# sudo rm /etc/bumblebee/bumblebee.conf
 sudo printf "[bumblebeed]
 VirtualDisplay=:8
 KeepUnusedXServer=false

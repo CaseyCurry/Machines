@@ -4,7 +4,7 @@ yum update -y
 yum install -y epel-release
 
 # begin i3 install
-yum install -y nano bzip2 gcc git pkgconfig autoconf automake libtool gperf byacc libxslt bison flex
+yum install -y bzip2 gcc git pkgconfig autoconf automake libtool gperf byacc libxslt bison flex
 yum groupinstall -y "X Window System"
 yum install -y libxcb-devel libXcursor-devel pango-devel pcre-devel perl-Data-Dumper perl-Pod-Parser startup-notification-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel yajl-devel check-devel gettext-devel xterm
 yum install -y xorg-x11-xkb-extras xorg-x11-xkb-utils-devel libxkbfile-devel libev-devel
