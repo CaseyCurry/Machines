@@ -11,7 +11,7 @@ git clone https://github.com/xkbcommon/libxkbcommon.git
 git clone http://git.savannah.gnu.org/r/confuse.git
 git clone https://github.com/i3/i3.git
 
-# Macros
+#macros
 cd ~/source/macros
 git tag -l
 git checkout tags/util-macros-1.19.0
@@ -86,18 +86,7 @@ make
 sudo make install
 
 #i3status
-cd ~/source
-sudo yum install pulseaudio-libs-devel alsa-lib-devel asciidoc libnl3-devel
-git clone https://github.com/i3/i3status.git
-curl -GL -O http://www.hpl.hp.com/personal/Jean_Tourrilhes/Linux/wireless_tools.29.tar.gz
-tar xvf wireless_tools.29.tar.gz
-cd wireless_tools.29
-make
-sudo make install
-
-cd ~/source/i3status/
-make
-sudo make install
+sudo yum install -y i3status
 echo "exec i3" > ~/.xinitrc
 
 #nvidia driver
@@ -106,6 +95,6 @@ echo "exec i3" > ~/.xinitrc
 
 #i3
 
-usermod -a -G audio cj
-usermod -a -G video cj
-usermod -a -G bumblebee cj
+# usermod -a -G audio cj
+# usermod -a -G video cj
+# usermod -a -G bumblebee cj
