@@ -81,7 +81,7 @@ sudo make install
 # i3
 cd ~/source/i3
 git tag -l
-git checkout tags/4.10.2
+git checkout tags/4.10.4
 make
 sudo make install
 
@@ -103,11 +103,10 @@ sudo bash -c 'echo "blacklist nouveau" > /etc/modprobe.d/blacklist.conf'
 sudo sed -i 's/quiet/quiet rd.driver.blacklist=nouveau/' /etc/default/grub
 sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
 
-
 # download nvidia driver
-sudo yum install -y kernel-devel kernel-headers gcc make
-cd ~
-curl -O http://us.download.nvidia.com/XFree86/Linux-x86_64/384.59/NVIDIA-Linux-x86_64-384.59.run
-chmod +x NVIDIA-Linux-x86_64-384.59.run
+# sudo yum install -y kernel-devel kernel-headers gcc make
+# cd ~
+# curl -O http://us.download.nvidia.com/XFree86/Linux-x86_64/384.59/NVIDIA-Linux-x86_64-384.59.run
+# chmod +x NVIDIA-Linux-x86_64-384.59.run
 
-# reboot with nouveau drivers
+# reboot without nouveau drivers

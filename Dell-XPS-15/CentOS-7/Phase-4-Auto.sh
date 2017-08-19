@@ -1,6 +1,23 @@
 #! /bin/bash
 
-rm ./NVIDIA-Linux-x86_64-384.59.run
+# disable nvidia
+sudo yum install -y dkms kernel-headers
+cd ~/source
+git clone https://github.com/Bumblebee-Project/bbswitch
+cd ./bbswitch
+git tag -l
+git checkout tags/v0.8
+sudo make -f Makefile.dkms
+# sudo modprobe bbswitch
+# sudo tee /proc/acpi/bbswitch <<<OFF
+sudo bash -c 'echo "bbswitch" > /etc/modules-load.d/bbswitch.conf'
+sudo bash -c 'echo "options bbswitch load_state=0" > /etc/modprobe.d/bbswitch.conf'
+
+
+
+
+
+
 
 #bumblebee
 sudo rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
