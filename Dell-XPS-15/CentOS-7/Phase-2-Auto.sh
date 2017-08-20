@@ -3,6 +3,9 @@
 sudo yum update -y
 sudo yum install -y epel-release
 
+# change terminal font size
+sudo vi /etc/vconsole.conf
+
 # begin i3 install
 sudo yum install -y bzip2 gcc git pkgconfig autoconf automake libtool gperf byacc libxslt bison flex
 sudo yum groupinstall -y "X Window System"
@@ -13,6 +16,10 @@ export PKG_CONFIG_LIBDIR=/usr/local/lib/pkgconfig/:/usr/lib/pkgconfig/:/usr/lib6
 export PKG_CONFIG_PATH=/usr/share/pkgconfig/:/usr/local/share/pkgconfig/
 export ACLOCAL_PATH=/usr/local/share/aclocal/
 export LD_LIBRARY_PATH=/usr/local/lib/" > /etc/profile.d/pclib.sh'
+
+# prepare next phases
+chmod u+x ~/source/Machines/Dell-XPS-15/CentOS-7/Phase-3-Auto.sh
+chmod u+x ~/source/Machines/Dell-XPS-15/CentOS-7/Phase-4-Auto.sh
 
 # reboot the machine so kernel and env vars take place.
 reboot
