@@ -3,16 +3,6 @@
 sudo yum update -y
 sudo yum install -y epel-release
 
-# prepare
-sudo yum install -y git
-mkdir ~/source
-cd ~/source
-git clone https://github.com/caseycurry/Machines
-cd ./Machines/Dell-XPS-15/CentOS-7
-chmod u+x Phase-2-Auto.sh
-chmod u+x Phase-3-Auto.sh
-chmod u+x Phase-4-Auto.sh
-
 # begin i3 install
 sudo yum install -y bzip2 gcc git pkgconfig autoconf automake libtool gperf byacc libxslt bison flex
 sudo yum groupinstall -y "X Window System"

@@ -2,7 +2,7 @@
 # disable RAID
 # disable Secure Boot
 
-# change font size
+# change terminal font size
 sudo vi /etc/vconsole.conf
 
 # prepare
