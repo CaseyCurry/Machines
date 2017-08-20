@@ -14,3 +14,6 @@ sudo bash -c 'echo "options bbswitch load_state=0" > /etc/modprobe.d/bbswitch.co
 
 # cleanup
 sudo rm -rf ~/source
+
+# reboot without gpu
+reboot

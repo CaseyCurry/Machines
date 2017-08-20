@@ -15,3 +15,4 @@ export ACLOCAL_PATH=/usr/local/share/aclocal/
 export LD_LIBRARY_PATH=/usr/local/lib/" > /etc/profile.d/pclib.sh'
 
 # reboot the machine so kernel and env vars take place.
+reboot

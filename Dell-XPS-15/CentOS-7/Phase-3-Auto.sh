@@ -94,3 +94,4 @@ sudo sed -i 's/quiet/quiet rd.driver.blacklist=nouveau/' /etc/default/grub
 sudo grub2-mkconfig -o /boot/efi/EFI/centos/grub.cfg
 
 # reboot without nouveau drivers
+reboot
