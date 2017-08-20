@@ -30,8 +30,5 @@ sudo yum install -y alsa-utils
 # link missing ath10k firmware
 sudo ln -s /lib/firmware/ath10k/QCA6174/hw3.0/firmware-4.bin /lib/firmware/ath10k/QCA6174/hw3.0/firmware-5.bin
 
-# cleanup
-sudo rm -rf ~/source
-
 # reboot without gpu
 reboot

@@ -4,7 +4,7 @@ curl -L -O https://github.com/atom/atom/releases/download/v1.19.2/atom.x86_64.rp
 sudo yum localinstall -y atom.x86_64.rpm
 
 # install packages
-
+apm install --packages -file ~/source/Machines/atom-packages
 
 # cleanup
 sudo rm -rf ~/source
