@@ -80,10 +80,19 @@ sudo make install
 sudo yum install -y i3status
 
 # i3 config
-echo "exec i3" > ~/.xinitrc
+printf "xrandr --dpi 220
+exec i3" > ~/.xinitrc
+printf "Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.dpi: 220
+XTerm*faceName: DejaVu Sans Mono
+XTerm*faceSize: 7" > ~/.XResources
 mkdir ~/.i3 && touch ~/.i3/config
 cat /etc/i3/config | sed 's/Mod1/Mod4/g' > ~/.i3/config
 sed -i '/exec i3-config-wizard/ s/^/#/' ~/.i3/config
+sed -i '$aexec xrdb ~/.XResources' ~/.i3/config
+sudo yum install -y dejavu-sans-mono-fonts
 
 # blacklist nouveau driver
 # http://www.dedoimedo.com/computers/centos-7-nvidia.html
