@@ -27,17 +27,17 @@ rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 sudo yum install -y alsa-utils
 
-# link missing ath10k firmware
-sudo ln -s /lib/firmware/ath10k/QCA6174/hw3.0/firmware-4.bin /lib/firmware/ath10k/QCA6174/hw3.0/firmware-5.bin
-
-# install atom
-cd ~/source
-curl -L -O https://github.com/atom/atom/releases/download/v1.19.2/atom.x86_64.rpm
-sudo yum localinstall -y atom.x86_64.rpm
-
-# install packages
-apm install --packages-file ~/source/Machines/atom-packages
-apm upgrade --confirm false
+# # link missing ath10k firmware
+# sudo ln -s /lib/firmware/ath10k/QCA6174/hw3.0/firmware-4.bin /lib/firmware/ath10k/QCA6174/hw3.0/firmware-5.bin
+#
+# # install atom
+# cd ~/source
+# curl -L -O https://github.com/atom/atom/releases/download/v1.19.2/atom.x86_64.rpm
+# sudo yum localinstall -y atom.x86_64.rpm
+#
+# # install packages
+# apm install --packages-file ~/source/Machines/atom-packages
+# apm upgrade --confirm false
 
 # cleanup
 sudo rm -rf ~/source
