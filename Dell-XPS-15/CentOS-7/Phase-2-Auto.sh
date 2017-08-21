@@ -4,7 +4,7 @@ sudo yum update -y
 sudo yum install -y epel-release
 
 # change terminal font size
-sudo vi /etc/vconsole.conf
+sudo sed -i 's/sun16/sun32/' /etc/vconsole.conf
 
 # begin i3 install
 sudo yum install -y bzip2 gcc git pkgconfig autoconf automake libtool gperf byacc libxslt bison flex

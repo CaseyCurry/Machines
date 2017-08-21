@@ -15,4 +15,3 @@ chmod u+x Phase-2-Auto.sh
 ~/source/Dell-XPS-15/CentOS-7/Phase-2-Auto.sh
 ~/source/Dell-XPS-15/CentOS-7/Phase-3-Auto.sh
 ~/source/Dell-XPS-15/CentOS-7/Phase-4-Auto.sh
-~/source/Dell-XPS-15/CentOS-7/Phase-5-Auto.sh

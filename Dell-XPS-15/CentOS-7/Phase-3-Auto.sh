@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/bin/bash
 
 cd ~/source
 git clone https://anongit.freedesktop.org/git/xorg/util/macros.git
@@ -95,7 +95,7 @@ XTerm.vt100.background: black" > ~/.XResources
 mkdir ~/.i3 && touch ~/.i3/config
 cat /etc/i3/config | sed 's/Mod1/Mod4/g' > ~/.i3/config
 sed -i '/font pango:mono/ s/^/#/' ~/.i3/config
-sed -i 's/#font pango:DejaVu/font pango:DejaVu/' /etc/default/grub
+sed -i 's/#font pango:DejaVu/font pango:DejaVu/' ~/.i3/config
 sed -i '/exec i3-config-wizard/ s/^/#/' ~/.i3/config
 sed -i '$aexec xrdb ~/.XResources' ~/.i3/config
 
