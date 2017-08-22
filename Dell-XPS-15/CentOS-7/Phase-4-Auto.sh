@@ -32,12 +32,24 @@ sudo yum install -y alsa-utils
 
 # install atom
 cd ~/source
-curl -L -O https://github.com/atom/atom/releases/download/v1.19.2/atom.x86_64.rpm
+curl -L -O https://github.com/atom/atom/releases/download/v1.19.1/atom.x86_64.rpm
 sudo yum localinstall -y atom.x86_64.rpm
 
 # install packages
 # apm install --packages-file ~/source/Machines/atom-packages
 # apm upgrade --confirm false
+
+# install virtualbox
+sudo curl -L -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
+sudo yum install -y binutils qt gcc make patch libgomp glibc-headers glibc-devel kernel-headers kernel-devel dkms
+sudo yum install -y VirtualBox-5.1
+sudo /usr/lib/virtualbox/vboxdrv.sh setup
+sudo usermod -a -G vboxusers cj
+
+# download CentOS 7 Min
+mkdir ~/images
+cd ~/images
+curl -L -O http://centos.mirror.constant.com/7/isos/x86_64/CentOS-7-x86_64-Minimal-1611.iso
 
 # cleanup
 sudo rm -rf ~/source
