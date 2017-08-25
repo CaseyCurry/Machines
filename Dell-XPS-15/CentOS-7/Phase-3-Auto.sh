@@ -99,6 +99,9 @@ sed -i 's/#font pango:DejaVu/font pango:DejaVu/' ~/.i3/config
 sed -i '/exec i3-config-wizard/ s/^/#/' ~/.i3/config
 sed -i '$aexec xrdb ~/.XResources' ~/.i3/config
 
+# fix firmware issue with network adapter
+sudo ln -s /usr/lib/firmware/ath10k/QCA6174/hw3.0/firmware.4.bin /usr/lib/firmware/ath10k/QCA6174/hw3.0/firmware.5.bin
+
 # blacklist nouveau driver
 # http://www.dedoimedo.com/computers/centos-7-nvidia.html
 # https://www.linkedin.com/pulse/rhel7centos-nvidia-drviers-updated-christopher-meacham
