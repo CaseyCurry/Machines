@@ -1,3 +1,4 @@
+# config network
 sudo bash -c 'sed -i "$ aDNS1=8.8.8.8" /etc/sysconfig/network-scripts/ifcfg-enp0s3'
 sudo bash -c 'sed -i "$ aDNS2=8.8.4.4" /etc/sysconfig/network-scripts/ifcfg-enp0s3'
 sudo bash -c 'sed -i "s/ONBOOT=no/ONBOOT=yes/" /etc/sysconfig/network-scripts/ifcfg-enp0s3'
@@ -9,8 +10,9 @@ sudo bash -c 'sed -i "$ aNETMASK=255.255.255.0" /etc/sysconfig/network-scripts/i
 
 sudo service network restart
 
+# install server
 sudo yum update -y
-sudo yum install -y java-1.8.0-openjdk
+sudo yum install -y git java-1.8.0-openjdk
 sudo curl https://download.gocd.org/gocd.repo -o /etc/yum.repos.d/gocd.repo
 sudo yum install -y go-server
 sudo /etc/init.d/go-server start

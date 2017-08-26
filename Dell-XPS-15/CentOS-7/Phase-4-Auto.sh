@@ -28,7 +28,7 @@ rpm -Uvh http://www.elrepo.org/elrepo-release-7.0-3.el7.elrepo.noarch.rpm
 sudo yum install -y alsa-utils
 
 # link missing ath10k firmware
-# sudo ln -s /lib/firmware/ath10k/QCA6174/hw3.0/firmware-4.bin /lib/firmware/ath10k/QCA6174/hw3.0/firmware-5.bin
+sudo ln -s /lib/firmware/ath10k/QCA6174/hw3.0/firmware-4.bin /lib/firmware/ath10k/QCA6174/hw3.0/firmware-5.bin
 
 # install atom
 cd ~/source
@@ -50,6 +50,10 @@ sudo usermod -a -G vboxusers cj
 mkdir ~/images
 cd ~/images
 curl -L -O http://centos.mirror.constant.com/7/isos/x86_64/CentOS-7-x86_64-Minimal-1611.iso
+
+# install node
+curl -sL https://rpm.nodesource.com/setup_6.x | sudo bash -
+sudo yum install -y nodejs
 
 # cleanup
 sudo rm -rf ~/source
