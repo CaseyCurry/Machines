@@ -34,10 +34,15 @@ sudo ln -s /lib/firmware/ath10k/QCA6174/hw3.0/firmware-4.bin /lib/firmware/ath10
 cd ~/source
 curl -L -O https://github.com/atom/atom/releases/download/v1.19.1/atom.x86_64.rpm
 sudo yum localinstall -y atom.x86_64.rpm
+sudo yum install -y gvfs
 
 # install packages
 # apm install --packages-file ~/source/Machines/atom-packages
 # apm upgrade --confirm false
+
+# config git
+git config --global credential.helper cache
+git config --global credential.helper 'cache --timeout=14400'
 
 # install virtualbox
 sudo curl -L -o /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
@@ -54,6 +59,10 @@ curl -L -O http://centos.mirror.constant.com/7/isos/x86_64/CentOS-7-x86_64-Minim
 # install node
 curl -sL https://rpm.nodesource.com/setup_6.x | sudo bash -
 sudo yum install -y nodejs
+
+# config git
+git config --global user.name "CaseyCurry"
+git config --global user.email "casey.de.curry@gmail.com"
 
 # cleanup
 sudo rm -rf ~/source
