@@ -6,8 +6,14 @@ sudo yum install -y epel-release
 # change terminal font size
 sudo sed -i 's/sun16/sun32/' /etc/vconsole.conf
 
+# install git
+cd ~/source
+curl -L -O https://centos7.iuscommunity.org/ius-release.rpm
+sudo rpm -Uvh ius-release.rpm
+sudo yum install -y git2u
+
 # begin i3 install
-sudo yum install -y bzip2 gcc git pkgconfig autoconf automake libtool gperf byacc libxslt bison flex
+sudo yum install -y bzip2 gcc pkgconfig autoconf automake libtool gperf byacc libxslt bison flex
 sudo yum groupinstall -y "X Window System"
 sudo yum install -y libxcb-devel libXcursor-devel pango-devel pcre-devel perl-Data-Dumper perl-Pod-Parser startup-notification-devel xcb-util-keysyms-devel xcb-util-devel xcb-util-wm-devel yajl-devel check-devel gettext-devel xterm
 sudo yum install -y xorg-x11-xkb-extras xorg-x11-xkb-utils-devel libxkbfile-devel libev-devel
