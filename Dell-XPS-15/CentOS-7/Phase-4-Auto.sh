@@ -64,6 +64,11 @@ sudo yum install -y nodejs
 git config --global user.name "CaseyCurry"
 git config --global user.email "casey.de.curry@gmail.com"
 
+# install vagrant
+cd ~/source
+curl -LO https://releases.hashicorp.com/vagrant/1.9.8/vagrant_1.9.8_x86_64.rpm
+sudo yum localinstall -y vagrant_1.9.8_x86_64.rpm
+
 # cleanup
 sudo rm -rf ~/source
 
