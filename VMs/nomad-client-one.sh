@@ -21,6 +21,7 @@ sudo mv consul /usr/local/bin/consul
 sudo firewall-cmd --add-port=8300-8303/tcp --permanent
 sudo firewall-cmd --add-port=8400/tcp --permanent
 sudo firewall-cmd --add-port=8500/tcp --permanent
+sudo firewall-cmd --add-port=20000-60000/tcp --permanent
 sudo firewall-cmd --reload
 
 sudo mkdir /etc/consul.d
@@ -59,6 +60,7 @@ data_dir = \"/etc/nomad.d\"
 bind_addr = \"$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)")\"
 
 client {
+  network_interface = \"enp0s8\"
   enabled = true
 }" > /etc/nomad.d/client.hcl'
 

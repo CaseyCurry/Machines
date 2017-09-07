@@ -20,6 +20,9 @@ sudo mv consul /usr/local/bin/consul
 
 sudo firewall-cmd --add-port=8300-8303/tcp --permanent
 sudo firewall-cmd --add-port=8500/tcp --permanent
+sudo firewall-cmd --add-port=8600/tcp --permanent
+sudo firewall-cmd --add-port=8600/udp --permanent
+sudo firewall-cmd --add-port=20000-60000/tcp --permanent
 sudo firewall-cmd --reload
 
 sudo mkdir /etc/consul.d
@@ -28,8 +31,8 @@ Description=Consul Service
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/consul agent -server -bootstrap-expect=1 \\
-    -data-dir=/tmp/consul -node=consul-server -bind=$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)") \\
+ExecStart=/usr/local/bin/consul agent -server -ui -bootstrap-expect=1 \\
+    -client=0.0.0.0 -data-dir=/tmp/consul -node=consul-server -bind=$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)") \\
     -enable-script-checks=true -datacenter=dev-lab -config-dir=/etc/consul.d \\
 RestartSec=3
 Restart=on-failure
@@ -79,3 +82,68 @@ sudo systemctl start nomad
 bash -c 'printf "\\nNOMAD_ADDR=http://$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)"):4646"' >> ~/.bash_profile
 bash -c 'printf "\\n\\nexport NOMAD_ADDR' >> ~/.bash_profile
 source ~/.bash_profile
+
+# install consul-template
+cd /tmp
+curl -LO https://releases.hashicorp.com/consul-template/0.19.2/consul-template_0.19.2_linux_amd64.tgz
+tar -xzf consul-template_0.19.2_linux_amd64.tgz
+sudo mv consul-template /usr/local/bin/consul-template
+sudo ln /usr/local/bin/consul-template /usr/bin/consul-template
+
+# install nginx
+sudo bash -c 'printf "[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/\$releasever/\$basearch/
+gpgcheck=0
+enabled=1" > /etc/yum.repos.d/nginx.repo'
+sudo yum install -y nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+sudo firewall-cmd --add-service=http --permamnent
+sudo firewall-cmd --add-service=https --permamnent
+sudo firewall-cmd --reload
+sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/selinux/config
+sudo setenforce 0
+
+# configure nginx
+sudo bash -c 'printf "{{ range services }}{{ if .Tags | contains \"luca\" }}
+upstream {{ .Name }} { {{ range service .Name }}
+  server {{ .Address }}:{{ .Port }};{{ end }}
+}{{ end }}{{ end }}
+
+server {
+  listen 80;
+  server_name localhost;
+
+  location / {
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+  }
+  {{ range services }}{{ if .Tags | contains \"luca\" }}
+  location ^~ /{{ index (.Name | split \"-\") 1 }}/{{ index (.Name | split \"-\") 0 }}/ {
+    proxy_pass http://{{ .Name }};
+  }{{ end }}{{ end }}
+
+  error_page 404 /404.html;
+
+  error_page 500 502 503 504 /50x.html;
+
+  location = /50x.html {
+    root /usr/share/nginx/html;
+  }
+}" > /etc/nginx/conf.d/default.ctmpl'
+sudo consul-template -template "/etc/nginx/conf.d/default.ctmpl:/etc/nginx/conf.d/default.conf:nginx -s reload"
+sudo bash -c 'printf "[Unit]
+Description=Consul-Template for Nginx Configuration
+After=consul.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/consul-template -template \"/etc/nginx/conf.d/default.ctmpl:/etc/nginx/conf.d/default.conf:nginx -s reload\"
+RestartSec=5
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target" > /etc/systemd/system/consul-template.service'
+sudo systemctl enable consul-template
+sudo systemctl start consul-template
