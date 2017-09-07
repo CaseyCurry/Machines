@@ -38,3 +38,9 @@ curl -sL https://rpm.nodesource.com/setup_6.x | sudo bash -
 sudo yum install -y nodejs
 npm set registry http://192.168.56.103:4873
 npm adduser
+
+# acbuild
+cd /tmp
+curl -O https://raw.githubusercontent.com/CaseyCurry/LucaOpsEnvironment/master/dependencies/rkt/latest/acbuild-v0.4.0.tar.gz
+tar xf ./acbuild-v0.4.0.tar.gz
+sudo cp ./acbuild-v0.4.0/* /usr/local/bin/
