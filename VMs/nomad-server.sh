@@ -106,6 +106,7 @@ sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/selinux/config
 sudo setenforce 0
 
 # configure nginx
+sudo mkdir /www && sudo mkdir /www/containers
 sudo bash -c 'printf "{{ range services }}{{ if .Tags | contains \"luca\" }}
 upstream {{ .Name }} { {{ range service .Name }}
   server {{ .Address }}:{{ .Port }};{{ end }}
@@ -118,6 +119,10 @@ server {
   location / {
     root /usr/share/nginx/html;
     index index.html index.htm;
+  }
+
+  location ~ \.aci {
+    root /www/containers;
   }
   {{ range services }}{{ if .Tags | contains \"luca\" }}
   location ^~ /{{ index (.Name | split \"-\") 1 }}/{{ index (.Name | split \"-\") 0 }}/ {
@@ -132,7 +137,6 @@ server {
     root /usr/share/nginx/html;
   }
 }" > /etc/nginx/conf.d/default.ctmpl'
-sudo consul-template -template "/etc/nginx/conf.d/default.ctmpl:/etc/nginx/conf.d/default.conf:nginx -s reload"
 sudo bash -c 'printf "[Unit]
 Description=Consul-Template for Nginx Configuration
 After=consul.service
