@@ -108,8 +108,7 @@ sudo setenforce 0
 # configure nginx
 sudo mkdir /www && sudo mkdir /www/containers
 sudo chown -R cj:nginx /www
-sudo chmod -R 710 /www
-sudo chmod -R 744 /www/containers
+sudo chmod -R 754 /www
 sudo bash -c 'printf "{{ range services }}{{ if .Tags | contains \"luca\" }}
 upstream {{ .Name }} { {{ range service .Name }}
   server {{ .Address }}:{{ .Port }};{{ end }}
