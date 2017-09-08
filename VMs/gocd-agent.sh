@@ -26,8 +26,12 @@ sudo chmod -R u+rX /home/go
 sudo mkdir /var/go
 sudo chown -R go /var/go
 sudo chmod -R u+rX /var/go
-sudo mkdir /home/go/.ssh
-sudo ssh-keygen -t rsa -f /home/go/.ssh/id_dsa
+
+# create public key
+sudo passwd -uf go
+su - go
+ssh-keygen -t rsa
+ssh-copy-id cj@192.168.56.110
 
 # install git
 curl -L -O https://centos7.iuscommunity.org/ius-release.rpm

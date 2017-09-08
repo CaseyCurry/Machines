@@ -107,6 +107,8 @@ sudo setenforce 0
 
 # configure nginx
 sudo mkdir /www && sudo mkdir /www/containers
+sudo chmod 744 /www/containers
+sudo chown cj:cj /www/containers
 sudo bash -c 'printf "{{ range services }}{{ if .Tags | contains \"luca\" }}
 upstream {{ .Name }} { {{ range service .Name }}
   server {{ .Address }}:{{ .Port }};{{ end }}
@@ -151,3 +153,8 @@ Restart=on-failure
 WantedBy=multi-user.target" > /etc/systemd/system/consul-template.service'
 sudo systemctl enable consul-template
 sudo systemctl start consul-template
+
+# fix permissions on home directory to allow ssh with public key
+chmod g-w /home/cj
+chmod 700 /home/cj/.ssh
+chmod 600 /home/cj/.ssh/authorized_keys
