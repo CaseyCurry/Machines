@@ -112,8 +112,8 @@ sudo chmod -R 754 /www
 sudo bash -c 'printf "{{ range services }}{{ if .Tags | contains \"luca\" }}
 upstream {{ .Name }} { {{ range service .Name }}
   server {{ .Address }}:{{ .Port }};{{ end }}
-}{{ end }}{{ end }}
-
+}
+{{ end }}{{ end }}
 server {
   listen 80;
   server_name localhost;
@@ -128,9 +128,9 @@ server {
   }
   {{ range services }}{{ if .Tags | contains \"luca\" }}
   location ^~ /{{ index (.Name | split \"-\") 1 }}/{{ index (.Name | split \"-\") 0 }}/ {
-    proxy_pass http://{{ .Name }};
-  }{{ end }}{{ end }}
-
+    proxy_pass http://{{ .Name }}{{ if .Tags | contains \"client\" }}/{{ end }};
+  }
+  {{ end }}{{ end }}
   error_page 404 /404.html;
 
   error_page 500 502 503 504 /50x.html;
