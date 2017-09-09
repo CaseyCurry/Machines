@@ -67,7 +67,7 @@ sudo /etc/init.d/go-agent-5 start
 # create public key
 sudo passwd -uf go
 su - go
-ssh-keygen -t rsa
+ssh-keygen -t rsa -P ''
 ssh-copy-id cj@192.168.56.110
 
 # install git
