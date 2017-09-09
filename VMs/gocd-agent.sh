@@ -18,11 +18,11 @@ sudo yum install -y java-1.8.0-openjdk
 sudo curl https://download.gocd.org/gocd.repo -o /etc/yum.repos.d/gocd.repo
 sudo yum install -y go-agent
 sudo bash -c 'sed -i "s/127.0.0.1/192.168.56.100/" /etc/default/go-agent'
-sudo bash -c 'sed -i "s//var/lib/${SERVICE_NAME:-go-agent}//var/go/" /etc/default/go-agent'
+sudo bash -c 'sed -i "s//var/lib/${SERVICE_NAME:-go-agent}//var/go-agent-1/" /etc/default/go-agent'
 sudo /etc/init.d/go-agent start
-sudo mkdir /var/go
-sudo chown -R go /var/go
-sudo chmod -R u+rX /var/go
+sudo mkdir /var/go-agent-1
+sudo chown -R go /var/go-agent-1
+sudo chmod -R u+rX /var/go-agent-1
 
 # install go-agent-2
 sudo cp /etc/init.d/go-agent /etc/init.d/go-agent-2
