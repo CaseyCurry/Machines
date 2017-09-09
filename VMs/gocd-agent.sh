@@ -10,7 +10,7 @@ sudo bash -c 'sed -i "$ aNETMASK=255.255.255.0" /etc/sysconfig/network-scripts/i
 
 sudo service network restart
 
-# install agent
+# install go-agent-1
 sudo yum update -y
 sudo hostnamectl set-hostname gocd-agent-1
 sudo yum install -y epel-release
@@ -18,14 +18,67 @@ sudo yum install -y java-1.8.0-openjdk
 sudo curl https://download.gocd.org/gocd.repo -o /etc/yum.repos.d/gocd.repo
 sudo yum install -y go-agent
 sudo bash -c 'sed -i "s/127.0.0.1/192.168.56.100/" /etc/default/go-agent'
-sudo bash -c 'sed -i "s//var/lib/${SERVICE_NAME:-go-agent}//home/go/" /etc/default/go-agent'
+sudo bash -c 'sed -i "s//var/lib/${SERVICE_NAME:-go-agent}//var/go/" /etc/default/go-agent'
 sudo /etc/init.d/go-agent start
-sudo mkdir /home/go
-sudo chown -R go /home/go
-sudo chmod -R u+rX /home/go
 sudo mkdir /var/go
 sudo chown -R go /var/go
 sudo chmod -R u+rX /var/go
+
+# install go-agent-2
+sudo cp /etc/init.d/go-agent /etc/init.d/go-agent-2
+sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-2/g' /etc/init.d/go-agent-2
+sudo ln -s /usr/share/go-agent /usr/share/go-agent-2
+sudo cp -p /etc/default/go-agent /etc/default/go-agent-2
+sudo bash -c 'sed -i "s/\/var\/go/\/var\/go-agent-2/" /etc/default/go-agent-2'
+sudo mkdir /var/go-agent-2
+sudo chown -R go /var/go-agent-2
+sudo chmod -R u+rX /var/go-agent-2
+sudo mkdir /var/{lib,log}/go-agent-2
+sudo chown go:go /var/{lib,log}/go-agent-2
+sudo chkconfig go-agent-2 on
+sudo /etc/init.d/go-agent-2 start
+
+# install go-agent-3
+sudo cp /etc/init.d/go-agent /etc/init.d/go-agent-3
+sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-3/g' /etc/init.d/go-agent-3
+sudo ln -s /usr/share/go-agent /usr/share/go-agent-3
+sudo cp -p /etc/default/go-agent /etc/default/go-agent-3
+sudo bash -c 'sed -i "s/\/var\/go/\/var\/go-agent-3/" /etc/default/go-agent-3'
+sudo mkdir /var/go-agent-3
+sudo chown -R go /var/go-agent-3
+sudo chmod -R u+rX /var/go-agent-3
+sudo mkdir /var/{lib,log}/go-agent-3
+sudo chown go:go /var/{lib,log}/go-agent-3
+sudo chkconfig go-agent-3 on
+sudo /etc/init.d/go-agent-3 start
+
+# install go-agent-4
+sudo cp /etc/init.d/go-agent /etc/init.d/go-agent-4
+sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-4/g' /etc/init.d/go-agent-4
+sudo ln -s /usr/share/go-agent /usr/share/go-agent-4
+sudo cp -p /etc/default/go-agent /etc/default/go-agent-4
+sudo bash -c 'sed -i "s/\/var\/go/\/var\/go-agent-4/" /etc/default/go-agent-4'
+sudo mkdir /var/go-agent-4
+sudo chown -R go /var/go-agent-4
+sudo chmod -R u+rX /var/go-agent-4
+sudo mkdir /var/{lib,log}/go-agent-4
+sudo chown go:go /var/{lib,log}/go-agent-4
+sudo chkconfig go-agent-4 on
+sudo /etc/init.d/go-agent-4 start
+
+# install go-agent-5
+sudo cp /etc/init.d/go-agent /etc/init.d/go-agent-5
+sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-5/g' /etc/init.d/go-agent-5
+sudo ln -s /usr/share/go-agent /usr/share/go-agent-5
+sudo cp -p /etc/default/go-agent /etc/default/go-agent-5
+sudo bash -c 'sed -i "s/\/var\/go/\/var\/go-agent-5/" /etc/default/go-agent-5'
+sudo mkdir /var/go-agent-5
+sudo chown -R go /var/go-agent-5
+sudo chmod -R u+rX /var/go-agent-5
+sudo mkdir /var/{lib,log}/go-agent-5
+sudo chown go:go /var/{lib,log}/go-agent-5
+sudo chkconfig go-agent-5 on
+sudo /etc/init.d/go-agent-5 start
 
 # create public key
 sudo passwd -uf go
