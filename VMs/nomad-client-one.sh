@@ -62,6 +62,10 @@ bind_addr = \"$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)")\"
 client {
   network_interface = \"enp0s8\"
   enabled = true
+  meta {
+    "couchdb" = "1",
+    "rkt" = "1"
+  }
 }" > /etc/nomad.d/client.hcl'
 
 sudo bash -c 'printf "[Unit]
