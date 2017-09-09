@@ -87,6 +87,16 @@ bash -c 'printf "\\nNOMAD_ADDR=http://$(ip -4 addr show enp0s8 | grep -oP "(?<=i
 bash -c 'printf "\\n\\nexport NOMAD_ADDR"' >> ~/.bash_profile
 source ~/.bash_profile
 
+# install rkt
+sudo sed -i 's/SELINUX=enforcing/SELINUX=permissive/' /etc/selinux/config
+sudo setenforce 0
+sudo bash -c 'printf "[rkt]
+name=rkt
+baseurl=http://cbs.centos.org/repos/virt7-rkt-common-candidate/x86_64/os/
+enabled=1
+gpgcheck=0" > /etc/yum.repos.d/cbs-rkt.repo'
+sudo yum install -y rkt
+
 # install couch
 sudo bash -c 'printf "[couchdb]
 name=apache-couchdb-rpm
