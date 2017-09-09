@@ -30,7 +30,7 @@ sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-2/g' /etc/init.d/go-ag
 sudo ln -s /usr/share/go-agent /usr/share/go-agent-2
 sudo cp -p /etc/default/go-agent /etc/default/go-agent-2
 sudo mkdir /var/{lib,log}/go-agent-2
-sudo chown go:go /var/{lib,log}/go-agent-2
+sudo chown go /var/{lib,log}/go-agent-2
 sudo chkconfig go-agent-2 on
 sudo /etc/init.d/go-agent-2 start
 
@@ -40,7 +40,7 @@ sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-3/g' /etc/init.d/go-ag
 sudo ln -s /usr/share/go-agent /usr/share/go-agent-3
 sudo cp -p /etc/default/go-agent /etc/default/go-agent-3
 sudo mkdir /var/{lib,log}/go-agent-3
-sudo chown go:go /var/{lib,log}/go-agent-3
+sudo chown go /var/{lib,log}/go-agent-3
 sudo chkconfig go-agent-3 on
 sudo /etc/init.d/go-agent-3 start
 
@@ -50,7 +50,7 @@ sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-4/g' /etc/init.d/go-ag
 sudo ln -s /usr/share/go-agent /usr/share/go-agent-4
 sudo cp -p /etc/default/go-agent /etc/default/go-agent-4
 sudo mkdir /var/{lib,log}/go-agent-4
-sudo chown go:go /var/{lib,log}/go-agent-4
+sudo chown go /var/{lib,log}/go-agent-4
 sudo chkconfig go-agent-4 on
 sudo /etc/init.d/go-agent-4 start
 
@@ -60,7 +60,7 @@ sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-5/g' /etc/init.d/go-ag
 sudo ln -s /usr/share/go-agent /usr/share/go-agent-5
 sudo cp -p /etc/default/go-agent /etc/default/go-agent-5
 sudo mkdir /var/{lib,log}/go-agent-5
-sudo chown go:go /var/{lib,log}/go-agent-5
+sudo chown go /var/{lib,log}/go-agent-5
 sudo chkconfig go-agent-5 on
 sudo /etc/init.d/go-agent-5 start
 
