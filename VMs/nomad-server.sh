@@ -118,14 +118,14 @@ server {
   listen 80;
   server_name localhost;
 
-  location / {
-    root /usr/share/nginx/html;
-    index index.html index.htm;
-  }
-
   location ~ \.aci {
     root /www/containers;
   }
+  {{ range services }}{{ if .Tags | contains \"app\" }}
+  location / {
+    proxy_pass http://{{ .Name }};
+  }
+  {{ end }}{{ end }}
   {{ range services }}{{ if .Tags | contains \"luca\" }}
   location ^~ /{{ index (.Name | split \"-\") 1 }}/{{ index (.Name | split \"-\") 0 }}/ {
     proxy_pass http://{{ .Name }}{{ if .Tags | contains \"client\" }}/{{ end }};
