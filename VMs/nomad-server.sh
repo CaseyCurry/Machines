@@ -115,8 +115,7 @@ upstream {{ .Name }} { {{ range service .Name }}
 }
 {{ end }}{{ end }}
 server {
-  listen 80;
-  server_name localhost;
+  listen *:80 default_server;
 
   location ~ \.aci {
     root /www/containers;
@@ -124,11 +123,17 @@ server {
   {{ range services }}{{ if .Tags | contains \"app\" }}
   location / {
     proxy_pass http://{{ .Name }};
+    proxy_set_header X-NginX-Proxy true;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
   }
   {{ end }}{{ end }}
   {{ range services }}{{ if .Tags | contains \"luca\" }}
-  location ^~ /{{ index (.Name | split \"-\") 1 }}/{{ index (.Name | split \"-\") 0 }}/ {
-    proxy_pass http://{{ .Name }}{{ if .Tags | contains \"client\" }}/{{ end }};
+  location ^~ /{{ index (.Name | split \"-\") 1 }}/{{ index (.Name | split \"-\") 0 }} {
+    proxy_pass http://{{ .Name }};
+    proxy_set_header X-NginX-Proxy true;
+    proxy_set_header X-Real-IP \$remote_addr;
+    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
   }
   {{ end }}{{ end }}
   error_page 404 /404.html;
