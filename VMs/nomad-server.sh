@@ -109,42 +109,7 @@ sudo setenforce 0
 sudo mkdir /www && sudo mkdir /www/containers
 sudo chown -R cj:nginx /www
 sudo chmod -R 754 /www
-sudo bash -c 'printf "{{ range services }}{{ if .Tags | contains \"luca\" }}
-upstream {{ .Name }} { {{ range service .Name }}
-  server {{ .Address }}:{{ .Port }};{{ end }}
-}
-{{ end }}{{ end }}
-server {
-  listen *:80 default_server;
-
-  location ~ \.aci {
-    root /www/containers;
-  }
-  {{ range services }}{{ if .Tags | contains \"app\" }}
-  location / {
-    proxy_pass http://{{ .Name }};
-    proxy_set_header X-NginX-Proxy true;
-    proxy_set_header X-Real-IP \$remote_addr;
-    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-  }
-  {{ end }}{{ end }}
-  {{ range services }}{{ if .Tags | contains \"luca\" }}
-  location ^~ /{{ index (.Name | split \"-\") 1 }}/{{ index (.Name | split \"-\") 0 }} {
-    proxy_pass http://{{ .Name }};
-    proxy_set_header X-NginX-Proxy true;
-    proxy_set_header X-Real-IP \$remote_addr;
-    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-  }
-  {{ end }}{{ end }}
-  error_page 404 /404.html;
-
-  error_page 500 502 503 504 /50x.html;
-
-  location = /50x.html {
-    root /usr/share/nginx/html;
-  }
-}" > /etc/nginx/conf.d/default.ctmpl'
-sudo bash -c 'printf "[Unit]
+gsudo bash -c 'printf "[Unit]
 Description=Consul-Template for Nginx Configuration
 After=consul.service
 
