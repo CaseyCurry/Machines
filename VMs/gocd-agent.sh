@@ -81,6 +81,7 @@ curl -sL https://rpm.nodesource.com/setup_6.x | sudo bash -
 sudo yum install -y nodejs
 npm set registry http://192.168.56.103:4873
 npm adduser
+npm set progress=false
 
 # acbuild
 cd /tmp
