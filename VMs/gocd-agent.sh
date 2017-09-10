@@ -17,6 +17,7 @@ sudo yum install -y epel-release
 sudo yum install -y java-1.8.0-openjdk
 sudo curl https://download.gocd.org/gocd.repo -o /etc/yum.repos.d/gocd.repo
 sudo yum install -y go-agent
+sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-1/g' /etc/init.d/go-agent
 sudo bash -c 'sed -i "s/127.0.0.1/192.168.56.100/" /etc/default/go-agent'
 sudo /etc/init.d/go-agent start
 
@@ -26,7 +27,7 @@ sudo chmod -R 740 /var/go
 
 # install go-agent-2
 sudo cp /etc/init.d/go-agent /etc/init.d/go-agent-2
-sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-2/g' /etc/init.d/go-agent-2
+sudo sed -i 's/# Provides: go-agent-1$/# Provides: go-agent-2/g' /etc/init.d/go-agent-2
 sudo ln -s /usr/share/go-agent /usr/share/go-agent-2
 sudo cp -p /etc/default/go-agent /etc/default/go-agent-2
 sudo mkdir /var/{lib,log}/go-agent-2
@@ -36,7 +37,7 @@ sudo /etc/init.d/go-agent-2 start
 
 # install go-agent-3
 sudo cp /etc/init.d/go-agent /etc/init.d/go-agent-3
-sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-3/g' /etc/init.d/go-agent-3
+sudo sed -i 's/# Provides: go-agent-1$/# Provides: go-agent-3/g' /etc/init.d/go-agent-3
 sudo ln -s /usr/share/go-agent /usr/share/go-agent-3
 sudo cp -p /etc/default/go-agent /etc/default/go-agent-3
 sudo mkdir /var/{lib,log}/go-agent-3
@@ -46,7 +47,7 @@ sudo /etc/init.d/go-agent-3 start
 
 # install go-agent-4
 sudo cp /etc/init.d/go-agent /etc/init.d/go-agent-4
-sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-4/g' /etc/init.d/go-agent-4
+sudo sed -i 's/# Provides: go-agent-1$/# Provides: go-agent-4/g' /etc/init.d/go-agent-4
 sudo ln -s /usr/share/go-agent /usr/share/go-agent-4
 sudo cp -p /etc/default/go-agent /etc/default/go-agent-4
 sudo mkdir /var/{lib,log}/go-agent-4
@@ -56,7 +57,7 @@ sudo /etc/init.d/go-agent-4 start
 
 # install go-agent-5
 sudo cp /etc/init.d/go-agent /etc/init.d/go-agent-5
-sudo sed -i 's/# Provides: go-agent$/# Provides: go-agent-5/g' /etc/init.d/go-agent-5
+sudo sed -i 's/# Provides: go-agent-1$/# Provides: go-agent-5/g' /etc/init.d/go-agent-5
 sudo ln -s /usr/share/go-agent /usr/share/go-agent-5
 sudo cp -p /etc/default/go-agent /etc/default/go-agent-5
 sudo mkdir /var/{lib,log}/go-agent-5
@@ -80,8 +81,8 @@ rm ius-release.rpm
 curl -sL https://rpm.nodesource.com/setup_6.x | sudo bash -
 sudo yum install -y nodejs
 npm set registry http://192.168.56.103:4873
-npm adduser
 npm set progress=false
+npm adduser
 
 # acbuild
 cd /tmp
