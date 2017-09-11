@@ -1,11 +1,15 @@
 # config network
-sudo bash -c 'sed -i "$ aDNS1=8.8.8.8" /etc/sysconfig/network-scripts/ifcfg-enp0s3'
-sudo bash -c 'sed -i "$ aDNS2=8.8.4.4" /etc/sysconfig/network-scripts/ifcfg-enp0s3'
-sudo bash -c 'sed -i "s/ONBOOT=no/ONBOOT=yes/" /etc/sysconfig/network-scripts/ifcfg-enp0s3'
 sudo bash -c 'sed -i "s/BOOTPROTO=dhcp/BOOTPROTO=static/" /etc/sysconfig/network-scripts/ifcfg-enp0s8'
 sudo bash -c 'sed -i "s/ONBOOT=no/ONBOOT=yes/" /etc/sysconfig/network-scripts/ifcfg-enp0s8'
 sudo bash -c 'sed -i "$ aIPADDR=192.168.56.111" /etc/sysconfig/network-scripts/ifcfg-enp0s8'
 sudo bash -c 'sed -i "$ aNETMASK=255.255.255.0" /etc/sysconfig/network-scripts/ifcfg-enp0s8'
+
+sudo bash -c 'sed -i "s/ONBOOT=no/ONBOOT=yes/" /etc/sysconfig/network-scripts/ifcfg-enp0s3'
+sudo sed -i "s/plugins=ifcfg-rh/plugins=ifcfg-rh\ndns=none/" /etc/NetworkManager/NetworkManager.conf
+sudo bash -c 'printf "nameserver 192.168.56.109
+nameserver 8.8.8.8
+nameserver 8.8.4.4" > /etc/resolv.conf'
+
 sudo systemctl restart network
 
 sudo yum update -y
@@ -32,7 +36,7 @@ After=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/bin/consul agent -retry-join=192.168.56.110 \\
+ExecStart=/usr/local/bin/consul agent -retry-join=server.consul.devlab \\
     -datacenter=dev-lab -data-dir=/tmp/consul -node=consul-client-one -bind=$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)") \\
     -enable-script-checks=true -config-dir=/etc/consul.d
 RestartSec=3

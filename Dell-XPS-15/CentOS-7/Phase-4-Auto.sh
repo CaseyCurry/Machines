@@ -59,6 +59,7 @@ curl -L -O http://centos.mirror.constant.com/7/isos/x86_64/CentOS-7-x86_64-Minim
 # install node
 curl -sL https://rpm.nodesource.com/setup_6.x | sudo bash -
 sudo yum install -y nodejs
+npm config set registry http://verdaccio.devlab:4873/
 
 # config git
 git config --global user.name "CaseyCurry"
@@ -68,6 +69,12 @@ git config --global user.email "casey.de.curry@gmail.com"
 cd ~/source
 curl -LO https://releases.hashicorp.com/vagrant/1.9.8/vagrant_1.9.8_x86_64.rpm
 sudo yum localinstall -y vagrant_1.9.8_x86_64.rpm
+
+# config dns (this depends on a local DNS server being setup)
+sudo sed -i "s/plugins=ifcfg-rh/plugins=ifcfg-rh\ndns=none/" /etc/NetworkManager/NetworkManager.conf
+sudo bash -c 'printf "nameserver 192.168.56.109
+nameserver 8.8.8.8
+nameserver 8.8.4.4" > /etc/resolv.conf'
 
 # cleanup
 sudo rm -rf ~/source
