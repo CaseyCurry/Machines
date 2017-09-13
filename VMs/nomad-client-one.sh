@@ -67,8 +67,11 @@ client {
   network_interface = \"enp0s8\"
   enabled = true
   meta {
-    "couchdb" = "1",
-    "rkt" = "1"
+    \"couchdb\" = \"1\",
+    \"rkt\" = \"1\"
+  }
+  options {
+    \"driver.raw_exec.enable\" = \"1\"
   }
 }" > /etc/nomad.d/client.hcl'
 
