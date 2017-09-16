@@ -37,7 +37,7 @@ After=network-online.target
 [Service]
 Type=simple
 ExecStart=/usr/local/bin/consul agent -retry-join=server.consul.devlab \\
-    -datacenter=dev-lab -data-dir=/tmp/consul -node=consul-client-one -bind=$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)") \\
+    -datacenter=dev-lab -data-dir=/tmp/consul -node=consul-client-two -bind=$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)") \\
     -enable-script-checks=true -config-dir=/etc/consul.d
 RestartSec=3
 Restart=on-failure
@@ -58,7 +58,7 @@ sudo firewall-cmd --add-port=4646-4647/tcp --permanent
 sudo firewall-cmd --reload
 
 sudo mkdir /etc/nomad.d
-sudo bash -c 'printf "name = \"nomad-client-one\"
+sudo bash -c 'printf "name = \"nomad-client-two\"
 datacenter = \"dev-lab\"
 data_dir = \"/etc/nomad.d\"
 bind_addr = \"$(ip -4 addr show enp0s8 | grep -oP "(?<=inet ).*(?=/)")\"
@@ -67,7 +67,8 @@ client {
   network_interface = \"enp0s8\"
   enabled = true
   meta {
-    \"rkt\" = \"1\"
+    \"rkt\" = \"1\",
+    \"grafana\" = \"1\"
   }
   options {
     \"driver.raw_exec.enable\" = \"1\"

@@ -51,6 +51,8 @@ db.luca         IN      A       192.168.56.111
 server.gocd     IN      A       192.168.56.100
 agent1.gocd     IN      A       192.168.56.101
 verdaccio       IN      A       192.168.56.103
+elasticsearch   IN      A       192.168.56.102
+logstash        IN      A       192.168.56.102
 *               IN      A       192.168.56.109
 ' > /etc/nsd/devlab.zone
 nsd-control-setup

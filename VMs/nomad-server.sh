@@ -117,12 +117,14 @@ upstream {{ .Name }} { {{ range service .Name }}
   server {{ .Address }}:{{ .Port }};{{ end }}
 }
 {{ end }}{{ end }}
+
 server {
   listen *:80 default_server;
 
   location ~ \.aci {
     root /www/containers;
   }
+
   {{ range services }}{{ if .Tags | contains \"dependency\" }}
   location ^~ /{{ .Name }}/ {
     proxy_pass http://{{ .Name }}/;
@@ -174,3 +176,25 @@ sudo systemctl start consul-template
 chmod g-w /home/cj
 chmod 700 /home/cj/.ssh
 chmod 600 /home/cj/.ssh/authorized_keys
+
+# install filebeat
+sudo rpm --import https://packages.elastic.co/GPG-KEY-elasticsearch
+sudo bash -c 'printf "[elastic-5.x]
+name=Elastic repository for 5.x packages
+baseurl=https://artifacts.elastic.co/packages/5.x/yum
+gpgcheck=1
+gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+enabled=1
+autorefresh=1
+type=rpm-md" > /etc/yum.repos.d/elastic.repo'
+sudo yum install -y filebeat
+sudo systemctl enable filebeat
+sudo systemctl start filebeat
+
+# config filebeat
+sudo sed -i 's#/var/log/\*.log#/var/log/nginx/\*.log#' /etc/filebeat/filebeat.yml
+sudo sed -i 's/output.elasticsearch/#output.elasticsearch/' /etc/filebeat/filebeat.yml
+sudo sed -i 's/hosts: \["localhost:9200"\]/#hosts: \["localhost:9200"\]/' /etc/filebeat/filebeat.yml
+sudo sed -i 's/#output.logstash/output.logstash/' /etc/filebeat/filebeat.yml
+sudo sed -i 's/#hosts: \["localhost:5044"\]/hosts: \["logstash.devlab:5044"\]/' /etc/filebeat/filebeat.yml
+curl -H 'Content-Type: application/json' -XPUT 'http://services.devlab:9200/elasticsearch/_template/filebeat' -d@/etc/filebeat/filebeat.template.json
