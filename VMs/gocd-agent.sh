@@ -12,9 +12,13 @@ nameserver 8.8.4.4" > /etc/resolv.conf'
 
 sudo service network restart
 
-# install go-agent-1
 sudo yum update -y
-sudo hostnamectl set-hostname gocd-agent-1
+sudo yum install -y epel-release
+sudo yum install -y ntpdate
+sudo ntpdate 129.6.15.28
+sudo hostnamectl set-hostname gocd-agent-one
+
+# install go-agent-1
 sudo yum install -y epel-release
 sudo yum install -y java-1.8.0-openjdk
 sudo curl https://download.gocd.org/gocd.repo -o /etc/yum.repos.d/gocd.repo

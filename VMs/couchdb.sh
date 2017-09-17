@@ -12,6 +12,12 @@ nameserver 8.8.4.4" > /etc/resolv.conf'
 
 sudo service network restart
 
+sudo yum update -y
+sudo yum install -y epel-release
+sudo yum install -y ntpdate
+sudo ntpdate 129.6.15.28
+sudo hostnamectl set-hostname couchdb-server
+
 # install couchdb
 sudo yum install -y epel-release
 sudo yum update -y

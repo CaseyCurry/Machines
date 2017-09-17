@@ -14,6 +14,9 @@ sudo service network restart
 
 sudo yum update -y
 sudo yum install -y epel-release
+sudo yum install -y ntpdate
+sudo ntpdate 129.6.15.28
+sudo hostnamectl set-hostname elasticsearch-server
 
 # install elasticsearch
 sudo yum install -y java-1.8.0-openjdk
@@ -40,16 +43,22 @@ sudo bash -c 'printf "input {
   }
 }
 
-# filter {
-#
-# }
+filter {
+  mutate {
+    convert =&gt; [\"response\", \"integer\"]
+    convert =&gt; [\"bytes\", \"integer\"]
+    convert =&gt; [\"responsetime\", \"float\"]
+  }
+}
 
 output {
-  elasticsearch {
-    hosts => \"localhost:9200\"
-    manage_template => false
-    index => \"%%{[@metadata][beat]}-%%{+YYYY.MM.dd}\"
-    document_type => \"%%{[@metadata][type]}\"
+  if [@metadata][beat] {
+    elasticsearch {
+      hosts => \"localhost:9200\"
+      manage_template => false
+      index => \"%%{[@metadata][beat]}-%%{+YYYY.MM.dd}\"
+      document_type => \"%%{[@metadata][type]}\"
+    }
   }
 }" > /etc/logstash/conf.d/filebeats.conf'
 sudo firewall-cmd --add-port=5044/tcp --permanent

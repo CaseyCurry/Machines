@@ -12,8 +12,13 @@ nameserver 8.8.4.4" > /etc/resolv.conf'
 
 sudo service network restart
 
-# install server
 sudo yum update -y
+sudo yum install -y epel-release
+sudo yum install -y ntpdate
+sudo ntpdate 129.6.15.28
+sudo hostnamectl set-hostname gocd-server
+
+# install server
 sudo yum install -y git java-1.8.0-openjdk
 sudo curl https://download.gocd.org/gocd.repo -o /etc/yum.repos.d/gocd.repo
 sudo yum install -y go-server

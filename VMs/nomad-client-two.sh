@@ -14,6 +14,9 @@ sudo systemctl restart network
 
 sudo yum update -y
 sudo yum install -y epel-release
+sudo yum install -y ntpdate
+sudo ntpdate 129.6.15.28
+sudo hostnamectl set-hostname nomad-client-two
 
 # install consul
 sudo yum install -y unzip

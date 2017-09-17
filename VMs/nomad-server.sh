@@ -14,6 +14,9 @@ sudo systemctl restart network
 
 sudo yum update -y
 sudo yum install -y epel-release
+sudo yum install -y ntpdate
+sudo ntpdate 129.6.15.28
+sudo hostnamectl set-hostname nomad-server
 
 # install consul
 sudo yum install -y unzip
@@ -197,4 +200,5 @@ sudo sed -i 's/output.elasticsearch/#output.elasticsearch/' /etc/filebeat/filebe
 sudo sed -i 's/hosts: \["localhost:9200"\]/#hosts: \["localhost:9200"\]/' /etc/filebeat/filebeat.yml
 sudo sed -i 's/#output.logstash/output.logstash/' /etc/filebeat/filebeat.yml
 sudo sed -i 's/#hosts: \["localhost:5044"\]/hosts: \["logstash.devlab:5044"\]/' /etc/filebeat/filebeat.yml
+sudo sed -i 's/#exclude_files: \[\".gz$\"\]/exclude_files: \[\".gz$\"\]/' /etc/filebeat/filebeat.yml
 curl -H 'Content-Type: application/json' -XPUT 'http://services.devlab:9200/elasticsearch/_template/filebeat' -d@/etc/filebeat/filebeat.template.json
