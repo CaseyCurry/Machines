@@ -177,6 +177,8 @@ curl -L -O -o ~/src/ius-release.rpm https://centos7.iuscommunity.org/ius-release
 sudo rpm -Uvh ~/src/ius-release.rpm
 sudo yum install -y git2u
 sudo rm -r ~/src
+git config --global user.name "CaseyCurry"
+git config --global user.email "casey.de.curry@gmail.com"
 git config --global credential.helper cache
 git config --global credential.helper 'cache --timeout=14400'
 
