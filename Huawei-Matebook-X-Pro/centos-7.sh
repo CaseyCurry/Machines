@@ -18,7 +18,7 @@ yum upgrade -y
 yum install -y epel-release
 
 # kernel
-yum install kernel-devel kernel-headers gcc make
+yum install kernel-devel kernel-headers gcc gcc-c++ make
 uname -r
 rpm -q kernel-devel
 # repeat this and reboot until the versions match
