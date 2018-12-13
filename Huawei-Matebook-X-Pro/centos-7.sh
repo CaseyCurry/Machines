@@ -182,3 +182,15 @@ git config --global user.email "casey.de.curry@gmail.com"
 git config --global credential.helper cache
 git config --global credential.helper 'cache --timeout=14400'
 
+# npm config
+mkdir ~/.npm-global
+npm config set prefix '~/.npm-global'
+export PATH=~/.npm-global/bin:$PATH
+source ~/.bash_profile
+
+# joplin
+curl -o ~/Downloads/joplin.sh https://raw.githubusercontent.com/laurent22/joplin/master/Joplin_install_and_update.sh
+~/Downloads/joplin.sh
+sudo yum install -y fuse-sshfs
+~/.joplin/Joplin.AppImage
+sudo ln -s ~/.joplin/Joplin.AppImage /usr/local/bin/joplin
