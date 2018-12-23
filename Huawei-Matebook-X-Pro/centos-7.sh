@@ -110,6 +110,17 @@ yum install mongodb-org
 systemctl start mongod
 systemctl enable mongod
 
+# vscode
+rpm --import https://debian.neo4j.org/neotechnology.gpg.key
+bash -c 'printf "[neo4j]
+name=Neo4j
+baseurl=https://yum.neo4j.org/stable
+enabled=1
+gpgcheck=1" > /etc/yum.repos.d/neo4j.repo'
+yum install -y neo4j-3.5.1
+systemctl enable neo4j
+systemctl start neo4j
+
 # verdaccio
 useradd verdaccio -m
 passwd verdaccio
